@@ -38,12 +38,17 @@ namespace JordvarmeMonitor.MonitorActivity
         private static readonly string RunningMessage = @"Jordvarme styring kører";
         private static readonly string StoppedMessage = @"Jordvarme styring: stoppet";
         private static readonly string StillStoppedMessage = @"Jordvarme styring: fortsat stoppet";
+        private static readonly string DailyMessage = @"Jordvarme styring: kører fortsat";
+
 
         private static Mode Mode;
 
         public MonitorDirectory()
         {
             Mode = Mode.Running;
+
+            AdvanceNextTimeToSendDailyMessage();
+            SendEmail(StartMessage);
 
             watcher = new FileSystemWatcher(WatchPath);
             watcher.Changed += OnChanged;
@@ -56,8 +61,6 @@ namespace JordvarmeMonitor.MonitorActivity
             timer.Elapsed += OnTimedEvent;
             timer.AutoReset = true;
             timer.Enabled = true;
-
-            SendEmail(StartMessage);
 
             Console.WriteLine(ReadyMessage);
         }
@@ -99,10 +102,30 @@ namespace JordvarmeMonitor.MonitorActivity
             Mode = Mode.Stopped;
         }
 
+        private static DateTime NextTimeToSendDailyMessage { get; set; }
+
+        private static void AdvanceNextTimeToSendDailyMessage()
+        {
+            var now = DateTime.Now;
+
+            var todayAt0600 = new DateTime(now.Year, now.Month, now.Day, 06, 00, 00);
+
+            NextTimeToSendDailyMessage = (now < todayAt0600) ? todayAt0600 : todayAt0600.AddDays(1);
+        }
+
+        private static void SendDailyMessage()
+        {
+            if (DateTime.Now < NextTimeToSendDailyMessage) { return; }
+
+            SendEmail(DailyMessage);
+            AdvanceNextTimeToSendDailyMessage();
+        }
+
         private static void OnChanged(object sender, FileSystemEventArgs e)
         {
             Console.WriteLine("{0:HH:mm:ss.fff} - The timer was reset ", DateTime.Now);
             ResetTimer();
+            SendDailyMessage();
         }
 
         private static void OnTimedEvent(object source, ElapsedEventArgs e)
