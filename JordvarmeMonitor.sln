@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JordvarmeMonitor", "JordvarmeMonitor\JordvarmeMonitor.csproj", "{87576470-B444-49F3-A6E2-B24D9E73540C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87576470-B444-49F3-A6E2-B24D9E73540C}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{87576470-B444-49F3-A6E2-B24D9E73540C}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{87576470-B444-49F3-A6E2-B24D9E73540C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87576470-B444-49F3-A6E2-B24D9E73540C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {499AE805-9D09-4AF3-B48C-496FD8F06A16}
+	EndGlobalSection
+EndGlobal
